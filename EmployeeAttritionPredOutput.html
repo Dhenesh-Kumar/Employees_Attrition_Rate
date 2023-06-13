@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Employee Attrition Prediction Result</title>
+    <style>
+        html {
+            display: flex;
+            justify-content: center;
+            font-family: Roboto, Arial, sans-serif;
+            font-size: 15px;
+            background-image: url('/static/A2.jpg');
+            background-repeat: no-repeat;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            font-family: Roboto, Arial, sans-serif;
+            font-size: 15px;
+            background-color: transparent;
+            background-repeat: no-repeat;
+        }
+
+        .result-container {
+            padding-top: 50px;
+            background-color: transparent;
+            text-align: center;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 18px;
+        }
+        /* Change the text color to white */
+        .result-container p {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+<div class="result-container">
+    <h1 style="color: red;">Employee Attrition Prediction Result</h1>
+    {% if errorMessage %}
+        <p>{{ errorMessage }}</p>
+    {% else %}
+        <p>Employee ID: {{ emp_id }}</p>
+        <p>Employee Name: {{ emp_name }}</p>
+        <p>Prediction: {{ prediction }}</p>
+    {% endif %}
+
+    <a href="{{ url_for('home') }}" style="color:red;">Back to Home</a>
+</div>
+</body>
+</html>

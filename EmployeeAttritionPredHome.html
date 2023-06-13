@@ -1,0 +1,186 @@
+
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Employee Attrition form</title>
+  <style>
+    html{
+      display: flex;
+      justify-content: center;
+      font-family: Roboto, Arial, sans-serif;
+      font-size: 15px;
+	background-image: 
+  url('/static/A10.jpg');
+	background-repeat: no-repeat;
+      }
+     body {
+      display: flex;
+      justify-content: center;
+      font-family: Roboto, Arial, sans-serif;
+      font-size: 15px;
+	background-color: transparent;
+	background-repeat: no-repeat;
+      }
+      form {
+      padding-top: 50px;
+	background-color: transparent;
+      }
+      input[type=text], input[type=password] {
+      width: 100%;
+      padding: 16px 8px;
+      margin-top: 8px;
+      display: inline-block;
+      border: 1px solid #ccc;
+      box-sizing: border-box;
+	
+      }
+      .myUL {
+ 	 list-style-type: none;
+ 	 padding: 0;
+ 	 margin: 0;
+	max-height:130px;
+	overflow-y:auto;/*Also...*/
+    	overflow-x:hidden;/*And the end of the important part*/
+       }
+
+      .myUL li a {
+  	  border: 1px solid #ddd;
+  	  margin-top: -1px; /* Prevent double borders */
+ 	  background-color: #f6f6f6;
+  	  padding: 12px;
+ 	  text-decoration: none;
+  	  font-size: 14px;
+  	  color: rgb(5, 5, 5);
+  	  display: block
+	
+	}
+	.myUL li a {
+  	  list-style-type: none;
+	}
+	.myUL li a:hover {
+  	  background-color: #eee;
+	}
+	.hide{
+  	  display:none;  
+	}
+      button {
+      background-color: #0f0f0f;
+      color: white;
+      padding: 14px 0;
+      margin: 10px 0;
+      border: none;
+      cursor: pointer;
+      width: 100%;
+      }
+      h1 {
+      text-align:center;
+      fone-size:25;
+	
+      }
+      button:hover {
+      opacity: 0.8;
+      }
+      .formcontainer {
+      text-align: left;
+      margin: 5px 50px 12px;
+	margin-left: 0px;
+	background-color: transparent;
+      }
+      .container {
+      padding: 16px 0;
+      text-align:left;
+
+      }
+      .container1 {
+      padding: 8px 0;
+      text-align:left;
+      }
+      span.psw {
+      float: right;
+      padding-top: 0;
+      padding-right: 15px;
+      }
+      /* Change styles for span on extra small screens */
+      @media screen and (max-width: 300px) {
+      span.psw {
+      display: block;
+      float: none;
+      }
+</style>
+  </head>
+  <body >
+    <form action="{{ url_for('predict') }}" method="post">     
+
+ 	<img src="static/A8.jpg" class="center-block inno-shadow" width="270" height="100" style="padding-left: 20px;padding-bottom: 10px;">
+      <div class="formcontainer" >
+      <hr/>
+      <div class="container">
+        <label for="uname"  style="color: white;font-size:14px;">EMPLOYEE ID</label>
+	
+	{% if prediction %}
+        <input type="text" name="emp_id" placeholder="Enter ID" id="emp_id" name="uname" value="{{ emp_id }}" onkeyup="myFunction()" autocomplete="off" required>
+	{% else %}
+		{% if errorMessage %}
+			<input type="text" name="emp_id" id="emp_id" placeholder="{{ errorMessage }}" name="uname" onkeyup="myFunction()" autocomplete="off" required>
+		{% else %}
+			<input type="text" name="emp_id" id="emp_id" placeholder="Enter the ID"  onkeyup="myFunction()" name="uname" autocomplete="off" required>			
+			
+		{% endif %}
+	 {% endif %}
+		<ul class="myUL" id = "myUL" type="none">
+	
+				{% for o in emp_list %}
+ 					 <li style="display:none;"><a onclick="myHrefFunc('{{ o }}');">{{ o }}</a></li>
+  				{% endfor %}
+			</ul>
+         </div>
+      <button type="submit">Submit</button>
+      
+    </form>
+<script>
+function myFunction() {    
+    var input, filter, ul, li, a, i, txtValue,liString, liString1, a1 ;    
+    input = document.getElementById("emp_id");
+    filter = input.value;
+    len = filter.length;
+	
+    ul = document.getElementById("myUL");
+    li = ul.getElementsByTagName("li");
+    if(input.value==""){
+	ul.style.display = 'none';
+    }
+    else{
+	ul.style.display = '';
+     } 
+     for (i = 0; i < li.length; i++) {
+	liString = li[i].toString();
+        a = li[i].getElementsByTagName("a")[0];	
+        
+	if (a.textContent.toLowerCase().slice(0, len) == filter){
+           li[i].style.display = "";
+	}
+        else {
+            li[i].style.display = "none";
+        }
+    }
+
+}
+function myHrefFunc(val){
+  document.getElementById("emp_id").value = val;
+  ul = document.getElementById("myUL");
+  ul.style.display = 'none';
+}
+
+document.addEventListener("click", onScreenClick);
+
+function onScreenClick(){
+
+ ul = document.getElementById("myUL");
+  ul.style.display = 'none';
+}
+
+</script>
+  </body>
+</html>
+{% include 'EmployeeAttritionPredOutput.html' %}
